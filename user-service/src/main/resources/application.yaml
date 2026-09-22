@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: user-service
+
+
+# MYSQL configuration
+  datasource:
+    url: jdbc:mysql://localhost:3307/home_energy_tracker
+    username: root
+    password: Pkswain@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+
+
+
+
+
+server:
+  port: 6060
