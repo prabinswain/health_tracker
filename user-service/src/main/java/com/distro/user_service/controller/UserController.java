@@ -30,7 +30,6 @@ public class UserController {
                         responseDto,
                         null
                 );
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
@@ -46,7 +45,6 @@ public class UserController {
                         userDto,
                         null
                 );
-
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(response);
@@ -57,7 +55,6 @@ public class UserController {
             , @RequestBody UserRequestDto userRequestDto) {
 
         UserResponseDto responseDto = userService.updateUser(id, userRequestDto);
-
         ApiResponse<UserResponseDto> response =
                 ApiResponse.success(
                         responseDto,
@@ -74,10 +71,7 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserResponseDto>> deleteUser(@PathVariable Long id) {
 
         userService.deleteUser(id);
-
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .body(null);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 
     }
 }

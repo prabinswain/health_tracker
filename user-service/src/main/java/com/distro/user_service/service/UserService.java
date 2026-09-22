@@ -21,7 +21,7 @@ public class UserService {
 
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
 
-        log.info("A User getting register. name: {} ", userRequestDto.getName());
+//        log.info("A User getting register. name: {} ", userRequestDto.getName());
         User user = UserMapper.buildUserObject(userRequestDto);
         user = userRepository.save(user);
         return UserMapper.buildUserResponseDto(user);
@@ -30,7 +30,7 @@ public class UserService {
 
     public UserDto getUser(Long id) throws UserNotFoundException {
 
-        log.info("Getting user by ID ");
+//        log.info("Getting user by ID ");
         return userRepository.findById(id)
                 .map(UserMapper::buildUserDto)
                 .orElseThrow(() -> new UserNotFoundException("User is not present."));
@@ -38,7 +38,7 @@ public class UserService {
 
     public UserResponseDto updateUser(Long id, UserRequestDto userRequestDto) {
 
-        log.info("A User getting updated. name: {} ", userRequestDto.getName());
+//        log.info("A User getting updated. name: {} ", userRequestDto.getName());
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User is not present."));
 
