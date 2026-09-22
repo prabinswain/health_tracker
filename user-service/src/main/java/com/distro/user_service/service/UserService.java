@@ -52,4 +52,12 @@ public class UserService {
         return UserMapper.buildUserResponseDto(user);
 
     }
+
+    public void deleteUser(Long id) {
+        log.info("A User getting deleted. id: {} ", id);
+        userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User is not present."));
+
+        userRepository.deleteById(id);
+    }
 }
