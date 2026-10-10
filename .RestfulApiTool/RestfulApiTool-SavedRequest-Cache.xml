@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SavedRequest.Cache">
+    <option name="cache">
+      <map>
+        <entry key="Requests" value="[{&quot;id&quot;:&quot;1790049806006lh6f&quot;, &quot;parentId&quot;:&quot;0&quot;, &quot;name&quot;:&quot;@/api/v1/users&quot;, &quot;desc&quot;:&quot;&quot;, &quot;sort&quot;:&quot;0&quot;, &quot;child&quot;:[], &quot;icon&quot;:&quot;/icons/tool/request.svg&quot;, &quot;type&quot;:&quot;REQUEST&quot;, &quot;method&quot;:&quot;POST&quot;, &quot;url&quot;:&quot;@/api/v1/users&quot;, &quot;savedRequestEnvInfo&quot;:{&quot;env&quot;:&quot;Global&quot;, &quot;module&quot;:&quot;user-service&quot;, &quot;host&quot;:&quot;http://127.0.0.1&quot;, &quot;port&quot;:&quot;6060&quot;, &quot;contextPath&quot;:&quot;&quot;}, &quot;savedRequestParamInfo&quot;:{&quot;params&quot;:&quot;[]&quot;, &quot;authorization&quot;:&quot;{\&quot;token\&quot;:\&quot;\&quot;,\&quot;password\&quot;:\&quot;\&quot;,\&quot;selectType\&quot;:\&quot;No Auth\&quot;,\&quot;username\&quot;:\&quot;\&quot;}&quot;, &quot;headers&quot;:&quot;[]&quot;, &quot;body&quot;:[{&quot;index&quot;:&quot;0&quot;, &quot;select&quot;:&quot;false&quot;, &quot;params&quot;:&quot;&quot;}, {&quot;index&quot;:&quot;1&quot;, &quot;select&quot;:&quot;false&quot;, &quot;params&quot;:&quot;[]&quot;}, {&quot;index&quot;:&quot;2&quot;, &quot;select&quot;:&quot;false&quot;, &quot;params&quot;:&quot;[]&quot;}, {&quot;index&quot;:&quot;3&quot;, &quot;select&quot;:&quot;true&quot;, &quot;params&quot;:&quot;{\n  \&quot;name\&quot;: \&quot;deepak\&quot;,\n  \&quot;surname\&quot;: \&quot;maharana\&quot;,\n  \&quot;email\&quot;: \&quot;deepakmaharana@gmail.com\&quot;,\n  \&quot;address\&quot;: \&quot;Mumbai\&quot;,\n  \&quot;alerting\&quot;: false,\n  \&quot;energyAlertingThreshold\&quot;: 0.0\n}&quot;}]}}]" />
+      </map>
+    </option>
+  </component>
+</project>
