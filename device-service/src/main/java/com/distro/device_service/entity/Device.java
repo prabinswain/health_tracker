@@ -30,5 +30,7 @@ public class Device {
 
     private String location;
 
+    private Long userId;
+
 
 }

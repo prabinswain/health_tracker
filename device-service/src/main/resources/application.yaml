@@ -10,15 +10,11 @@ spring:
     password: Pkswain@123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: true
-
-
-
-
-
 
 server:
   port: 6061

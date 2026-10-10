@@ -8,6 +8,11 @@ import com.distro.user_service.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -24,6 +29,9 @@ public class UserController {
 
         UserResponseDto responseDto = userService.createUser(userRequestDto);
 
+        final String URIString = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                .toUriString() + "/" + responseDto.getName();
+
         ApiResponse<UserResponseDto> response =
                 ApiResponse.success(
                         "User created successfully",
@@ -31,7 +39,7 @@ public class UserController {
                         null
                 );
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .created(URI.create(URIString))
                 .body(response);
     }
 
