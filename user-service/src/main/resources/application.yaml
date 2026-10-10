@@ -2,7 +2,9 @@ spring:
   application:
     name: user-service
 
-
+#  threads:
+#    virtual:
+#      enabled: true
 # MYSQL configuration
   datasource:
     url: jdbc:mysql://localhost:3307/home_energy_tracker
@@ -14,11 +16,6 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-
-
-
-
-
 
 server:
   port: 6060
