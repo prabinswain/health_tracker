@@ -14,6 +14,92 @@ services:
       - db-data:/var/lib/mysql
       - db-data:/var/log/mysql
 
+  kafka:
+    container_name: kafka
+    image: apache/kafka:latest
+    ports:
+      - "9092:9092" # for internal listener (docker)
+      - "9094:9094" # for external listener (host machine)
+
+    environment:
+      ########################
+      # Kraft metadata and Node identity
+      #########################
+      # unique ID for this kafka node
+      KAFKA_NODE_ID: 1
+      # unique kafka cluster identifier (required for Kraft mode )
+      KAFKA_CLUSTER_ID: 'energy-tracker-cluster-1'
+      #Node roles - this node will act as both broker and controller
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+
+      ############################
+      # Controller quoram Configuration (Raft)
+      #############################
+      # List of controller nodes that from the raft Quoram
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@Kafka:9093'
+      # Listener name used by controller for internal Raft communication
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+
+      ################################
+      # KAFKA LISTENERS (Internal , external , controllers)
+      ################################
+      KAFKA_LISTENERS: >
+        PLAINTEXT://0.0.0.0:9092,
+        EXTERNAL://0.0.0.0:9094,
+        CONTROLLER://0.0.0.0:9093
+
+      # What each listener advertise to connecting clients
+      # Internal ( Docker container ) : kafka:9092
+      # External (Host machine) : localhost:9094
+      KAFKA_ADVERTISED_LISTENERS: >
+        PLAINTEXT://kafka:9092,
+        EXTERNAL://localhost:9094
+
+      # Maps listeners names to their security protocals
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: >
+        CONTROLLER:PLAINTEXT,
+        PLAINTEXT:PLAINTEXT,
+        EXTERNAL:PLAINTEXT
+
+      # Which listener broker we should use for internal communication
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+
+      #####################################
+      # Single node cluster safety setting
+      # ( coz replication >1 will break)
+      #####################################
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+      #######################################
+      # Broker defaults & quality  of life setting
+      ######################################
+      # Speed up consumer group startup
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      # Auto_create topics if they dont already exists
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      # Default number of partitions per topics
+      KAFKA_NUM_PARTITIONS: 1
+
+
+    volumes:
+      - ./docker/kafka_data:/var/lib/kafka/data
+
+  kafka-ui:
+    container_name: kafka-ui
+    image: ghcr.io/kafbat/kafka-ui:latest
+    ports:
+      - "8070:8080"
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092 # use internal
+      DYNAMIC_CONFIG_ENABLED: 'true'
+    restart: unless-stopped
+
 
 volumes:
   db-data:
+  kafka_data:
