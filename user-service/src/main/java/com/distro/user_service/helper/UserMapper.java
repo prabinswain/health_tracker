@@ -12,8 +12,8 @@ public class UserMapper {
                 .name(userRequestDto.getName())
                 .email(userRequestDto.getEmail())
                 .address(userRequestDto.getAddress())
-                .alerting(false)
-                .energyAlertingThreshold(0.0)
+                .alerting(userRequestDto.getAlerting())
+                .energyAlertingThreshold(userRequestDto.getEnergyAlertingThreshold())
                 .surname(userRequestDto.getSurname())
                 .build();
     }
@@ -31,6 +31,8 @@ public class UserMapper {
                 .id(user.getId())
                 .address(user.getAddress())
                 .surname(user.getSurname())
+                .alerting(user.getAlerting())
+                .energyAlertingThreshold(user.getEnergyAlertingThreshold())
                 .email(user.getEmail())
                 .build();
     }

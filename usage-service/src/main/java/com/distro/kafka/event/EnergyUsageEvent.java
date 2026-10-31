@@ -1,4 +1,4 @@
-package com.ingestion.kafka.event;
+package com.distro.kafka.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
@@ -6,7 +6,7 @@ import lombok.Builder;
 import java.time.Instant;
 
 @Builder
-public record EventUsageEvent(
+public record EnergyUsageEvent(
         Long deviceId,
         double energyConsumed,
         @JsonFormat(shape = JsonFormat.Shape.STRING)

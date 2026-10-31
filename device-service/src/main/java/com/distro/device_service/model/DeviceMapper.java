@@ -14,7 +14,7 @@ public class DeviceMapper {
     public static Device toDevice(DeviceDto deviceDto) {
 
         return  Device.builder()
-                .deviceType(deviceDto.getDeviceType())
+                .type(deviceDto.getType())
                 .name(deviceDto.getName())
                 .location(deviceDto.getLocation())
                 .build();
@@ -22,7 +22,7 @@ public class DeviceMapper {
 
     public static DeviceResponseDto toDeviceResponseDto(Device device) {
             return DeviceResponseDto.builder()
-                    .deviceType(device.getDeviceType())
+                    .deviceType(device.getType())
                     .name(device.getName())
                     .location(device.getLocation())
                     .build();

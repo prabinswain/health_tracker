@@ -36,18 +36,18 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<UserDto>> getUser(@PathVariable Long id) {
+    public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
 
         UserDto userDto = userService.getUser(id);
-        ApiResponse<UserDto> response =
-                ApiResponse.success(
-                        "User is fetched",
-                        userDto,
-                        null
-                );
+//        ApiResponse<UserDto> response =
+//                ApiResponse.success(
+//                        "User is fetched",
+//                        userDto,
+//                        null
+//                );
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(response);
+                .body(userDto);
     }
 
     @PutMapping("/{id}")

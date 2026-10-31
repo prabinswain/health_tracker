@@ -30,10 +30,13 @@ public class UserService {
 
     public UserDto getUser(Long id) throws UserNotFoundException {
 
-//        log.info("Getting user by ID ");
-        return userRepository.findById(id)
+        log.info("Getting user by ID ");
+        UserDto userDto = userRepository.findById(id)
                 .map(UserMapper::buildUserDto)
                 .orElseThrow(() -> new UserNotFoundException("User is not present."));
+
+        log.info("UserDto details :{}",userDto);
+        return userDto;
     }
 
     public UserResponseDto updateUser(Long id, UserRequestDto userRequestDto) {

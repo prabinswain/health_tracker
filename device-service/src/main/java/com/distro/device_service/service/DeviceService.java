@@ -10,44 +10,73 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Slf4j
 public class DeviceService {
 
     private final DeviceRepository deviceRepository;
 
-    public void deleteDevice(Long id) {
-
-        Device device = deviceRepository.findById(id).orElseThrow(
-                () -> new DeviceNotFoundException("Device is not present."));
-        deviceRepository.delete(device);
+    public DeviceService(DeviceRepository deviceRepository) {
+        this.deviceRepository = deviceRepository;
     }
 
-    public DeviceResponseDto updateDevice(Long id, DeviceDto userRequestDto) {
-
+    public DeviceDto getDeviceById(Long id) {
         Device device = deviceRepository.findById(id)
-                .orElseThrow(() -> new DeviceNotFoundException("Device is not present."));
-
-        device.setName(userRequestDto.getName());
-        device.setDeviceType(userRequestDto.getDeviceType());
-        device.setLocation(userRequestDto.getLocation());
-
-        device = deviceRepository.save(device);
-        return DeviceMapper.toDeviceResponseDto(device);
-
+                .orElseThrow(() ->
+                        new DeviceNotFoundException("Device not found with id " + id));
+        return mapToDto(device);
     }
 
-    public DeviceResponseDto getDevice(Long id) {
+    public DeviceDto createDevice(DeviceDto input) {
+        Device device = new Device();
+        device.setName(input.getName());
+        device.setType(input.getType());
+        device.setLocation(input.getLocation());
+        device.setUserId(input.getUserId());
 
-        return deviceRepository.findById(id)
-                .map(DeviceMapper::toDeviceResponseDto)
-                .orElseThrow(() -> new DeviceNotFoundException("Device is not present"));
+        final Device savedDevice = deviceRepository.save(device);
+        return mapToDto(savedDevice);
     }
 
-    public DeviceResponseDto createDevice(DeviceDto deviceDto) {
+    public DeviceDto updateDevice(Long id, DeviceDto input) {
+        Device existing = deviceRepository.findById(id)
+                .orElseThrow(() ->
+                        new DeviceNotFoundException("Device not found with id " + id));
 
-        Device device = deviceRepository.save(DeviceMapper.toDevice(deviceDto));
-        return DeviceMapper.toDeviceResponseDto(device);
+        existing.setName(input.getName());
+        existing.setType(input.getType());
+        existing.setLocation(input.getLocation());
+        existing.setUserId(input.getUserId());
+
+        final Device updatedDevice = deviceRepository.save(existing);
+        return mapToDto(updatedDevice);
+    }
+
+    public void deleteDevice(Long id) {
+        if (!deviceRepository.existsById(id)) {
+            throw new DeviceNotFoundException("Device not found with id " + id);
+        }
+        deviceRepository.deleteById(id);
+    }
+
+    public List<DeviceDto> getAllDevicesByUserId(Long userId) {
+        List<Device> devices = deviceRepository.findAllByUserId(userId);
+        return devices.stream()
+                .map(this::mapToDto)
+                .toList();
+    }
+
+
+    private DeviceDto mapToDto(Device device) {
+        DeviceDto dto = new DeviceDto();
+        dto.setId(device.getId());
+        dto.setName(device.getName());
+        dto.setType(device.getType());
+        dto.setLocation(device.getLocation());
+        dto.setUserId(device.getUserId());
+        return dto;
     }
 }

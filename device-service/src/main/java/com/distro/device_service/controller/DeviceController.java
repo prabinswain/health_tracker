@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/devices")
 public class DeviceController {
@@ -18,59 +20,35 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<DeviceResponseDto>> createDevice(@RequestBody DeviceDto deviceDto) {
-
-        DeviceResponseDto responseDto = deviceService.createDevice(deviceDto);
-
-        ApiResponse<DeviceResponseDto> response =
-                ApiResponse.success(
-                        "User created successfully",
-                        responseDto,
-                        null
-                );
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+    @GetMapping("/{id}")
+    public ResponseEntity<DeviceDto> getDeviceById(@PathVariable Long id) {
+        DeviceDto device = deviceService.getDeviceById(id);
+        return ResponseEntity.ok(device);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<DeviceResponseDto>> getUser(@PathVariable Long id) {
-
-        DeviceResponseDto userDto = deviceService.getDevice(id);
-        ApiResponse<DeviceResponseDto> response =
-                ApiResponse.success(
-                        "User is fetched",
-                        userDto,
-                        null
-                );
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(response);
+    @PostMapping("/create")
+    public ResponseEntity<DeviceDto> createDevice(@RequestBody DeviceDto deviceDto) {
+        DeviceDto createdDevice = deviceService.createDevice(deviceDto);
+        return ResponseEntity.ok(createdDevice);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<DeviceResponseDto>> updateUser(@PathVariable Long id
-            , @RequestBody DeviceDto deviceRequestDto) {
-
-        DeviceResponseDto responseDto = deviceService.updateDevice(id, deviceRequestDto);
-        ApiResponse<DeviceResponseDto> response =
-                ApiResponse.success(
-                        responseDto,
-                        null
-                );
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(response);
-
+    public ResponseEntity<DeviceDto> updateDevice(
+            @PathVariable Long id, @RequestBody DeviceDto deviceDto) {
+        DeviceDto updatedDevice = deviceService.updateDevice(id, deviceDto);
+        return ResponseEntity.ok(updatedDevice);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<DeviceResponseDto>> deleteUser(@PathVariable Long id) {
-
+    public ResponseEntity<Void> deleteDevice(@PathVariable Long id) {
         deviceService.deleteDevice(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.noContent().build();
+    }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<DeviceDto>> getAllDevicesByUserId(
+            @PathVariable Long userId) {
+        List<DeviceDto> devices = deviceService.getAllDevicesByUserId(userId);
+        return ResponseEntity.ok(devices);
     }
 }

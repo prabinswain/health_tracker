@@ -1,7 +1,7 @@
 package com.ingestion.ingestion_service.service;
 
 import com.ingestion.ingestion_service.dto.EnergyUsageDto;
-import com.ingestion.kafka.event.EventUsageEvent;
+import com.ingestion.kafka.event.EnergyUsageEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class IngestionService {
 
-    private final KafkaTemplate<String, EventUsageEvent> kafkaTemplate;
+    private final KafkaTemplate<String, EnergyUsageEvent> kafkaTemplate;
 
-    public IngestionService(KafkaTemplate<String, EventUsageEvent> kafkaTemplate) {
+    public IngestionService(KafkaTemplate<String, EnergyUsageEvent> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
 
     public void ingestEnergyUsage(EnergyUsageDto energyUsageDto) {
         // Convert DTO to event
-        EventUsageEvent event = EventUsageEvent.builder()
+        EnergyUsageEvent event = EnergyUsageEvent.builder()
                 .deviceId(energyUsageDto.deviceId())
                 .timestamp(energyUsageDto.timestamp())
                 .energyConsumed(energyUsageDto.energyConsumed())

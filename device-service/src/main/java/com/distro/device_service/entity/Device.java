@@ -10,13 +10,11 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "devices")
-
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
+@Data
 public class Device {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,11 +22,9 @@ public class Device {
     private String name;
 
     @Enumerated(EnumType.STRING)
-//    @Builder.Default
     @Column(name = "type")
-    private DeviceType deviceType;
+    private DeviceType type;
 
     private String location;
-
-
+    private Long userId;
 }
